@@ -7,29 +7,30 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2019
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up MSBuild
-      uses: microsoft/setup-msbuild@v1
-
-    - name: Set up .NET
-      uses: actions/setup-dotnet@v2
+      uses: actions/checkout@v3
       with:
-        dotnet-version: '6.x'  # Adjust version based on the project requirements
+        path: libs
 
-    - name: Install dependencies
-      run: nuget restore
-
-    - name: Build project
-      run: msbuild /p:Configuration=Release
-
-    - name: Upload artifact
-      uses: actions/upload-artifact@v2
+    - name: Checkout https://github.com/openshwprojects/OpenBK7231T_App
+      uses: actions/checkout@v3
       with:
-        name: obkSimulator
-        path: |
-          **/bin/Release/*.exe  # Adjust the path to match the output executable location
+        repository: openshwprojects/OpenBK7231T_App
+        path: OpenBK7231T_App
+        ref: master
+
+    - name: Copy files from lib to app (excluding examples)
+      run: |
+        if not exist app mkdir app
+        xcopy lib app /E /I /Y /EXCLUDE:libs\exclude.txt
+
+    - uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: x86
+    - name: Build something requiring CL.EXE
+      run: |
+        cmake -G "NMake Makefiles" .
+        nmake
