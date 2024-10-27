@@ -25,8 +25,9 @@ jobs:
     - name: Copy files from lib to app (excluding examples)
       run: |
         dir OpenBK7231T_App
-        xcopy libs\* app /E /I /Y /EXCLUDE:libs\exclude.txt
+        xcopy libs\* OpenBK7231T_App /E /I /Y /EXCLUDE:libs\exclude.txt
         dir OpenBK7231T_App
+        dir
 
     - uses: ilammy/msvc-dev-cmd@v1
       with:
