@@ -35,5 +35,5 @@ jobs:
     - name: Build something requiring CL.EXE
       run: |
         cd OpenBK7231T_App
-        cmake -G "NMake Makefiles" .
-        nmake
+        msbuild openBeken_win32_mvsc2017.vcxproj /p:Configuration=Release
+        dir /s /b "*.exe" ||  dir /s /b "C:\*.exe"
