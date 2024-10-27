@@ -24,15 +24,15 @@ jobs:
 
     - name: Copy files from lib to app (excluding examples)
       run: |
-        dir app
+        dir OpenBK7231T_App
         xcopy libs\* app /E /I /Y /EXCLUDE:libs\exclude.txt
-        dir app
+        dir OpenBK7231T_App
 
     - uses: ilammy/msvc-dev-cmd@v1
       with:
         arch: x86
     - name: Build something requiring CL.EXE
       run: |
-        cd app
+        cd OpenBK7231T_App
         cmake -G "NMake Makefiles" .
         nmake
