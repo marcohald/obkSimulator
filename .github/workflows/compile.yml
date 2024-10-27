@@ -24,13 +24,15 @@ jobs:
 
     - name: Copy files from lib to app (excluding examples)
       run: |
-        dir
-        xcopy libs app /E /I /Y /EXCLUDE:libs\exclude.txt
+        dir app
+        xcopy libs\* app /E /I /Y /EXCLUDE:libs\exclude.txt
+        dir app
 
     - uses: ilammy/msvc-dev-cmd@v1
       with:
         arch: x86
     - name: Build something requiring CL.EXE
       run: |
+        cd app
         cmake -G "NMake Makefiles" .
         nmake
