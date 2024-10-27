@@ -20,7 +20,7 @@ jobs:
       with:
         repository: openshwprojects/OpenBK7231T_App
         path: OpenBK7231T_App
-        ref: master
+        ref: main
 
     - name: Copy files from lib to app (excluding examples)
       run: |
