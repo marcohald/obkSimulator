@@ -1,0 +1,35 @@
+name: Compile and Publish Executable
+
+on:
+  push:
+    branches:
+      - main  # Replace with your branch if different
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up MSBuild
+      uses: microsoft/setup-msbuild@v1
+
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: '6.x'  # Adjust version based on the project requirements
+
+    - name: Install dependencies
+      run: nuget restore
+
+    - name: Build project
+      run: msbuild /p:Configuration=Release
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: obkSimulator
+        path: |
+          **/bin/Release/*.exe  # Adjust the path to match the output executable location
