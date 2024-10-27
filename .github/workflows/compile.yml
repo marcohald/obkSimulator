@@ -24,7 +24,7 @@ jobs:
 
     - name: Copy files from lib to app (excluding examples)
       run: |
-        if not exist app mkdir app
+        dir
         xcopy lib app /E /I /Y /EXCLUDE:libs\exclude.txt
 
     - uses: ilammy/msvc-dev-cmd@v1
